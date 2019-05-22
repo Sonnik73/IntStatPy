@@ -1,0 +1,30 @@
+ProteinCommonMin = 61
+ProteinCommonMax = 82
+AlbumenMin = 35
+AlbumenMax = 45
+B2M = 0
+SKFManMin = 95
+MSKFManMax = 145
+SKFWomanMin = 75
+MSKFManMax = 115
+BilirubyCommonMax = 17
+BilirubyStraightMax = 7.9
+ALTManMax = 18
+ALTWomanMax = 15
+ASTManMax = 22
+ASTWomanMax = 17
+CreatinineManMax = 108
+CreatinineWomanMax = 98
+UreaMax = 9
+LDGMax = 246
+UricAcidManMin = 210
+UricAcidManMax = 420
+UricAcidWomanMin = 150
+UricAcidWomanMax = 350
+SugarMin = 3.5
+SugarMax = 5.5
+IndexComorbid = 0
+
+
+Если фаил будет заполнен с ошибками в оформлении, то программа будет использовать стандартные показатели эталона.
+Если фаил был испорчен, его можно удалить, программа создаст новый фаил с показателями по умолчанию.

@@ -15,6 +15,7 @@ a="String"
 ValueVariable=0
 n=3
 Dict = {}
+DictPosition = {}
 
 
 #print(PathData)
@@ -32,37 +33,33 @@ class PathDocs(object):
         with io.open('./Sys/Data.txt', encoding='utf-8') as file:
             for line in file:
                 x = re.sub("^\s+|\n|\r|\s+$", '', line)
-
                 Data = open('config.txt', 'r')
                 lineS = Data.readline()
                 while lineS:
-                    #print(locals())
                     if((len(pattern.findall(lineS)))!=0):
-                        if((len(pattern.findall(lineS)))==2):
-                            #print(str(pattern.findall(lineS)[0]) +" = "+ str(pattern.findall(lineS)[1]))
-                            #exec("%s = %d" % ((str(pattern.findall(lineS)[0])),float(str(pattern.findall(lineS)[1]))))
+                        if((len(pattern.findall(lineS)))==3):
                             NameVar = str(pattern.findall(lineS)[0])
                             ValueVar = (float(str(pattern.findall(lineS)[1])))
-
                             Dict.update({NameVar: ValueVar})
 
-                            #Dict[NameVar] = ValueVar
+                            Position = str(pattern.findall(lineS)[2])
+                            DictPosition.update({NameVar:Position})
+
                             lineS = Data.readline()
 
-                        if((len(pattern.findall(lineS)))==3):
-                            #print(str(pattern.findall(lineS)[0]) +" = "+ str(pattern.findall(lineS)[1]) +"."+ str(pattern.findall(lineS)[2]))
+                        if((len(pattern.findall(lineS)))==4):
                             NameVar = str(pattern.findall(lineS)[0])
                             ValueVar = (float(str(pattern.findall(lineS)[1])+"."+str(pattern.findall(lineS)[2])))
                             Dict.update({NameVar: ValueVar})
-                            #Dict[NameVar] = ValueVar
-                            #exec("%s = %d" % (NameVar,ValueVar))
-                            #print(str(NameVar)+" = " + str(ValueVar))
-                            lineS = Data.readline()
 
+                            Position = str(pattern.findall(lineS)[3])
+                            DictPosition.update({NameVar:Position})
+
+                            lineS = Data.readline()
                     else:
-                        #print(SugarMax)
                         break
                 break
+
 
 
     
@@ -88,7 +85,6 @@ class PathDocs(object):
             ListSheet.append(sheet)
             i+=1
         sh = wb.active  
-
     def PrintData(row1,column1):
         print(ListSheet[0].cell(row=row1, column=column1).value)
 
@@ -97,6 +93,8 @@ class PathDocs(object):
 
 PathDocs.ConfigChecker()
 print(Dict.items())
+print(DictPosition.items())
+
 PathDocs.CheckListFiles()
 PathToFile = PathDocs.OpenFile()
 PathDocs.SheetList()
