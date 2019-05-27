@@ -206,7 +206,7 @@ class PathDocs(object):
                                                         print(str(pattern.findall(x1)[0])+" в таблице = "+str(NowData)+"а в конфиге = "+ (pattern.findall(x1)[1])+"."+(pattern.findall(x1)[2]))
                                                         print(pattern.findall(x1)[0].replace('Max', '')+" вSше нормы на "+ str(Calc)+" у № "+str(PathDocs.PrintData(int(MinCountRow),1)))
                                                         #DataList=(DataList+" "+str(Calc))
-                                                        DataList=(DataList+" "+str(1))
+                                                        DataList=(DataList+" "+str(-1))
                                                         MinCountColumn=MinCountColumn + 1
                                                         break
                                                     else:
@@ -355,13 +355,14 @@ if __name__ == "__main__":
         lst = file.readlines()
     lst = [[int(n) for n in x.split()] for x in lst]
     lstout=[]
+    pprint(lst[0])
     for i in range(len(lst)):
         lstout.append(lst[i][-1])
         del lst[i][-1]
-    print(len(array(lstout)))
-    print(lstout)
+    #print(len(array(lstout)))
+    #print(lstout)
     print(len(array(lst)))
-    pprint(lst)
+    #pprint(lst)
 
     training_set_inputs = array(lst)
     training_set_outputs = array([lstout]).T
@@ -370,14 +371,18 @@ if __name__ == "__main__":
 
     # Тренируйте нейронную сеть, используя тренировочный набор.
     # Сделайте это 10000 раз и вносите небольшие корректировки каждый раз.
-    neural_network.train(training_set_inputs, training_set_outputs, 10000)
+    neural_network.train(training_set_inputs, training_set_outputs, 100000)
 
     print ("Новая таблица массы синапсов: ")
     print (neural_network.synaptic_weights)
 
     # Протестируйте нейронную сеть в новой ситуации.
-    print ("Моделируем новую ситуацию [1, 0, 0] -> ?: ")
-    print (neural_network.think(array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])))
+    print ("Моделируем новую ситуацию [1, 0, 0...] -> ?: ")
+    a=(float(neural_network.think(array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))))
+    print (a)
+    print ((float(neural_network.think(array([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
+    print ((float(neural_network.think(array([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
+
 
 
 
