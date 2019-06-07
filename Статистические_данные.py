@@ -1,5 +1,6 @@
 # Import `load_workbook` module from `openpyxl`
 import os
+#from goto import with_goto
 from openpyxl import load_workbook
 import io
 import re
@@ -8,10 +9,12 @@ import sys
 from numpy import exp, array, random, dot
 
 
+
 pattern = re.compile(r'\w+')
 PathData = ('./Data/')
 ListSheet = []
 PathFiles = os.listdir(path=PathData)
+NumberFile1=10
 PathToFile = "String"
 StrRead = "a"
 a="String"
@@ -25,12 +28,8 @@ Man = 'Man'
 Woman = 'Woman'
 Max="Max"
 Min="Min"
-
-
-
-
-#print(PathData)
-
+DuraVar=10
+Duration = "Duration"
 
 
 
@@ -39,7 +38,20 @@ class PathDocs(object):
  
     def __init__():
         """Constructor"""
-        
+
+    def initialization():
+        PathData = ('./Data/')
+        ListSheet = []
+        PathFiles = os.listdir(path=PathData)
+        PathToFile = "String"
+        StrRead = "a"
+        a="String"
+        ValueVariable=0
+        n=3
+        Dict = {}
+        DictPosition = {}
+        ListPos = []
+       
 
     def ConfigChecker():
         with io.open('./Sys/Data.txt', encoding='utf-8') as file:
@@ -143,6 +155,10 @@ class PathDocs(object):
                     x = re.sub("^\s+|\n|\r|\s+$", '', ListPos[i])
                     PositionGender = str(pattern.findall(x)[3])
                     NowGender=PathDocs.PrintData(MinCountRow,int(PositionGender))
+                if Duration in ListPos[i]:
+                    x = re.sub("^\s+|\n|\r|\s+$", '', ListPos[i])
+                    NumberFile = str(pattern.findall(x)[1])
+                    #NowGender=PathDocs.PrintData(MinCountRow,int(PositionGender))
                     
 
             if(NowGender=="М"):
@@ -175,6 +191,8 @@ class PathDocs(object):
                         for i1 in range(len(NowListPos)):
                             x = re.sub("^\s+|\n|\r|\s+$", '', NowListPos[i1])
                             NowData = PathDocs.PrintData(int(MinCountRow),int(MinCountColumn))
+                            if(int(MinCountColumn)==20):
+                                continue
                             NowData=str(NowData)
                             NowData=NowData.replace(',', '.')
                             NowData=NowData.replace(' ', '')
@@ -235,7 +253,8 @@ class PathDocs(object):
                 #print(DataList)
                 MinCountColumn=MinCountColumn + 1
 
-            fwrite = open('text.txt', 'a')
+            #fwrite = open('text.txt', 'a')
+            fwrite = open('./Sys/'+str(NumberFile)+'.txt', 'a')
             DataList=DataList+"\n"
             fwrite.write(DataList)
             fwrite.close()
@@ -243,40 +262,31 @@ class PathDocs(object):
             
             MinCountRow=MinCountRow+1
         print(kkk)
+    def Runnered():
+
+        if((input("Пройтись по таблице? 1-да 2-нет"))=="1"):
+            
+            pprint(ListPos)
+            iii=0
+            while iii<=19:
+                iii=iii+1
+                DuraVar=(iii)*10
+                NumberFile=str(DuraVar)
+                ListPos[0]="Duration "+ str(int(DuraVar))+ ".0 19"
+                PathDocs.CalcDifference()
+        ii=0
+        while ii<20:        
+            ii=ii+1
+            NumberFile1=ii*10
+            Neurron.neurron(NumberFile1)
+            
 
 
-
-
-
-
-
-       
-
-
-
-
-
-
-                    
 
 
 
 
             
-            
-
-
-   
-
-
-PathDocs.ConfigChecker()
-PathDocs.CheckListFiles()
-PathToFile = PathDocs.OpenFile()
-PathDocs.SheetList()
-if((input("Пройтись по таблице? 1-да 2-нет"))=="1"):
-    PathDocs.CalcDifference()
-
-
 
 
 
@@ -335,15 +345,23 @@ class NeuralNetwork():
         # Передача входных данных через нашу нейронную сеть (наш единственный нейрон).
         return self.__sigmoid(dot(inputs, self.synaptic_weights))
 
+class Neurron(object):
+    """docstring"""
+ 
+    def __init__():
+        """Constructor"""
+       
 
-if __name__ == "__main__":
+    def neurron(NeuronFile):
+        NeuronFile1=NeuronFile
+        if __name__ == "__main__":
 
-    # Запуск одной нейронной сети нейронов.
+            # Запуск одной нейронной сети нейронов.
 
-    neural_network = NeuralNetwork()
+            neural_network = NeuralNetwork()
 
-    print ("Random starting synaptic weights: ")
-    print (neural_network.synaptic_weights)
+            #print ("Random starting synaptic weights: ")
+            #print (neural_network.synaptic_weights)
 
 
     # Учебный комплект. У нас есть 4 примера, каждый из которых состоит из 3 входных значений
@@ -351,45 +369,49 @@ if __name__ == "__main__":
     #training_set_inputs = array([[0, 0, 1, 1, 1], [1, 1, 1, 1, 0], [1, 0, 1, 1, 1], [0, 1, 1, 1, 1]])
     #training_set_outputs = array([[0, 1, 1, 0]]).T
 
-    with open('Text.txt', 'r') as file:
-        lst = file.readlines()
-    lst = [[int(n) for n in x.split()] for x in lst]
-    lstout=[]
-    pprint(lst[0])
-    for i in range(len(lst)):
-        lstout.append(lst[i][-1])
-        del lst[i][-1]
+            with open('./Sys/'+str(NeuronFile)+'.txt', 'r') as file:
+                lst = file.readlines()
+            lst = [[int(n) for n in x.split()] for x in lst]
+            lstout=[]
+            #pprint(lst[0])
+            for i in range(len(lst)):
+                lstout.append(lst[i][-1])
+                del lst[i][-1]
     #print(len(array(lstout)))
     #print(lstout)
-    print(len(array(lst)))
+    #print(len(array(lst)))
     #pprint(lst)
 
-    training_set_inputs = array(lst)
-    training_set_outputs = array([lstout]).T
+            training_set_inputs = array(lst)
+            training_set_outputs = array([lstout]).T
 
 
 
     # Тренируйте нейронную сеть, используя тренировочный набор.
     # Сделайте это 10000 раз и вносите небольшие корректировки каждый раз.
-    neural_network.train(training_set_inputs, training_set_outputs, 100000)
+            neural_network.train(training_set_inputs, training_set_outputs, 100000)
 
-    print ("Новая таблица массы синапсов: ")
-    print (neural_network.synaptic_weights)
+            #print ("Новая таблица массы синапсов: ")
+            #print (neural_network.synaptic_weights)
 
     # Протестируйте нейронную сеть в новой ситуации.
-    print ("Моделируем новую ситуацию [1, 0, 0...] -> ?: ")
-    a=(float(neural_network.think(array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))))
-    print (a)
-    print ((float(neural_network.think(array([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
-    print ((float(neural_network.think(array([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
+            #print ("Моделируем новую ситуацию [1, 0, 0...] -> ?: ")
+            #a=(float(neural_network.think(array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))))
+            #print (a)
+            #aa=((float(neural_network.think(array([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
+                                                   # 1 0 0 1 1 1 0 0 0 1 1 0 0 -1 0
+                                                   #1 0 0 1 1 1 0 0 0 1 1 0 0 -1 0
+            aa=((float(neural_network.think(array([1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, -1])))))
+            #NumberFile1=NumberFile1+10
+            if(aa>0.8):
+                print ("Доживет до "+str(NeuronFile)+" Месяцев")
+            
+            #print ((float(neural_network.think(array([1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
 
+PathDocs.ConfigChecker()
+PathDocs.CheckListFiles()
+PathToFile = PathDocs.OpenFile()     
+PathDocs.SheetList()
 
-
-
-
-
-
-
-
-
+PathDocs.Runnered()
 
