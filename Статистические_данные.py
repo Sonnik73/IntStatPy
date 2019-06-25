@@ -1,6 +1,4 @@
-# Import `load_workbook` module from `openpyxl`
 import os
-#from goto import with_goto
 from openpyxl import load_workbook
 import io
 import re
@@ -30,6 +28,7 @@ Max="Max"
 Min="Min"
 DuraVar=10
 Duration = "Duration"
+asd=0
 
 
 
@@ -95,7 +94,7 @@ class PathDocs(object):
         i=0
         FileName = PathFiles[int(input("Какой фаил открыть?\n"))-1]
         PathToFile = ((PathData)+str(FileName))
-        print(PathToFile)
+        #print(PathToFile)
         return PathToFile
     def SheetList():
         wb = load_workbook(PathToFile)
@@ -140,6 +139,8 @@ class PathDocs(object):
 
         print("В базе "+str(MaxCountRow)+" строк(и) и "+str(MaxCountColumn)+" столбца(ов)")
         print("Всего ячеек данных: "+str(MaxCountColumn*MaxCountRow))
+
+
 
         while MinCountRow != (MaxCountRow+1):
             DataList=" "
@@ -254,7 +255,11 @@ class PathDocs(object):
                 MinCountColumn=MinCountColumn + 1
 
             #fwrite = open('text.txt', 'a')
-            fwrite = open('./Sys/'+str(NumberFile)+'.txt', 'a')
+            if(asd=="1"):
+                fwrite = open('./Sys/'+str(NumberFile)+'.txt', 'a')
+            else:
+                fwrite = open('./Sys/'+str(NumberFile)+'.txt', 'a')
+            
             DataList=DataList+"\n"
             fwrite.write(DataList)
             fwrite.close()
@@ -265,29 +270,27 @@ class PathDocs(object):
     def Runnered():
 
         if((input("Пройтись по таблице? 1-да 2-нет"))=="1"):
-            
+            asd=(input("1-обучение нейросети, 2-расчёт нового пациента"))
             pprint(ListPos)
             iii=0
-            while iii<=19:
-                iii=iii+1
-                DuraVar=(iii)*10
+            while iii<=199:
+                if(asd=="1"):
+                    iii=iii+1
+                else:
+                    iii=iii+1000
+                DuraVar=(iii)
                 NumberFile=str(DuraVar)
                 ListPos[0]="Duration "+ str(int(DuraVar))+ ".0 19"
                 PathDocs.CalcDifference()
+        
         ii=0
-        while ii<20:        
+        while ii<200:      
+
             ii=ii+1
-            NumberFile1=ii*10
+
+            NumberFile1=ii
             Neurron.neurron(NumberFile1)
             
-
-
-
-
-
-
-            
-
 
 
 
@@ -368,7 +371,8 @@ class Neurron(object):
     # и 1 выходное значение.
     #training_set_inputs = array([[0, 0, 1, 1, 1], [1, 1, 1, 1, 0], [1, 0, 1, 1, 1], [0, 1, 1, 1, 1]])
     #training_set_outputs = array([[0, 1, 1, 0]]).T
-
+            
+            
             with open('./Sys/'+str(NeuronFile)+'.txt', 'r') as file:
                 lst = file.readlines()
             lst = [[int(n) for n in x.split()] for x in lst]
@@ -389,7 +393,7 @@ class Neurron(object):
 
     # Тренируйте нейронную сеть, используя тренировочный набор.
     # Сделайте это 10000 раз и вносите небольшие корректировки каждый раз.
-            neural_network.train(training_set_inputs, training_set_outputs, 100000)
+            neural_network.train(training_set_inputs, training_set_outputs, 10000)
 
             #print ("Новая таблица массы синапсов: ")
             #print (neural_network.synaptic_weights)
@@ -401,7 +405,21 @@ class Neurron(object):
             #aa=((float(neural_network.think(array([1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])))))
                                                    # 1 0 0 1 1 1 0 0 0 1 1 0 0 -1 0
                                                    #1 0 0 1 1 1 0 0 0 1 1 0 0 -1 0
-            aa=((float(neural_network.think(array([1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, -1])))))
+                                                   # 1 0 1 1 1 1 1 1 0 0 1 -1 1 -1 
+            #aa=((float(neural_network.think(array([1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, -1])))))
+
+            
+            with open('./Sys/'+str(1000)+'.txt', 'r') as file:
+                nst = file.readlines()
+            nst = [[int(n) for n in x.split()] for x in nst]
+            nstout=[]
+            #pprint(lst[0])
+            for i in range(len(nst)):
+                lstout.append(nst[i][-1])
+                del nst[i][-1]
+
+            aa=((float(neural_network.think(array(nst)))))
+            #aa=((float(neural_network.think(array([1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, -1, 1, -1])))))
             #NumberFile1=NumberFile1+10
             if(aa>0.8):
                 print ("Доживет до "+str(NeuronFile)+" Месяцев")
